@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { connectDB } = require('./db'); // Asegúrate de que la ruta sea correcta
 require('dotenv').config();
 const AWS = require('aws-sdk');
@@ -7,6 +8,7 @@ const multer = require('multer');
 
 const app = express();  
 const PORT = process.env.PORT || 3000;
+app.use(cors()); // Habilita CORS para todas las rutas
 app.use(express.json()); // Permite al servidor entender JSON
 
 // --- Servir archivos estáticos ---
