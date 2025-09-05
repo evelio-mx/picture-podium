@@ -9,6 +9,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json()); // Permite al servidor entender JSON
 
+// --- Servir archivos estáticos ---
+app.use(express.static('public'));
+
+// --- Multer (uploads en memoria) ---
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // --- Configuración de Almacenamiento (MinIO) ---
 const s3 = new AWS.S3({
@@ -19,10 +25,6 @@ const s3 = new AWS.S3({
     signatureVersion: 'v4'
 });
 
-//Endopoint
-app.get('/', (req, res) => {
-  res.send('Hola Mundo!');
-});
 
 // POST /upload - Sube una nueva imagen
 app.post('/upload', upload.single('image'), async (req, res) => {
