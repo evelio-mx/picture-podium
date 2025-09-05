@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { connectDB } = require('./db'); // Asegúrate de que la ruta sea correcta
+const { connectDB, client } = require('./db'); // Importa 'client'
 require('dotenv').config();
 const AWS = require('aws-sdk');
 const multer = require('multer');
@@ -54,7 +54,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
         const imageUrl = `${process.env.MINIO_ENDPOINT}/${bucketName}/${fileName}`;
 
         // Guardar en PostgreSQL
-        const result = await pool.query(
+        const result = await client.query(
             'INSERT INTO posts (image_url) VALUES ($1) RETURNING *',
             [imageUrl]
         );
