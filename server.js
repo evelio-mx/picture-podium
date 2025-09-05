@@ -69,7 +69,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 // GET /posts - Obtiene todas las publicaciones ordenadas por likes
 app.get('/posts', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM posts ORDER BY likes DESC');
+        const result = await client.query('SELECT * FROM posts ORDER BY likes DESC');
         res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error al obtener las publicaciones:', error);
