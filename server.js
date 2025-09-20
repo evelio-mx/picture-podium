@@ -61,7 +61,8 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 
         res.status(201).json(result.rows[0]);
     } catch (error) {
-        console.error('Error al subir la imagen:', error);
+        //console.error('Error al subir la imagen:', error);
+        console.error('Error al subir la imagen:', error.message, error.stack);
         res.status(500).send('Error en el servidor.');
     }
 });
